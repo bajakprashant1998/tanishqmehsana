@@ -3,6 +3,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import heroBridal from "@/assets/hero-bridal.jpg";
+import heroDiamond from "@/assets/hero-diamond.jpg";
+import heroGold from "@/assets/hero-gold.jpg";
 
 const slides = [
   {
@@ -11,7 +14,7 @@ const slides = [
     description: "Discover handcrafted bridal sets that celebrate your most precious moments",
     cta: "Explore Bridal",
     href: "/products?category=bridal",
-    gradient: "from-amber-900/80 via-amber-800/60 to-transparent",
+    image: heroBridal,
   },
   {
     title: "Diamonds Forever",
@@ -19,7 +22,7 @@ const slides = [
     description: "GIA-certified diamonds set in 18K gold, designed to dazzle for a lifetime",
     cta: "Shop Diamonds",
     href: "/products?category=diamond",
-    gradient: "from-slate-900/80 via-slate-800/60 to-transparent",
+    image: heroDiamond,
   },
   {
     title: "Gold Treasures",
@@ -27,7 +30,7 @@ const slides = [
     description: "BIS hallmark certified gold jewelry — investment you can wear",
     cta: "Shop Gold",
     href: "/products?category=gold",
-    gradient: "from-yellow-900/80 via-yellow-800/60 to-transparent",
+    image: heroGold,
   },
 ];
 
@@ -51,13 +54,14 @@ const HeroCarousel = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className={`absolute inset-0 bg-gradient-to-r ${slides[current].gradient}`}
+          className="absolute inset-0"
         >
-          {/* Placeholder shimmer background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-secondary via-navy/80 to-secondary" />
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(var(--gold)/0.15)_0%,_transparent_70%)]" />
-          </div>
+          <img
+            src={slides[current].image}
+            alt={slides[current].title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-secondary/80 via-secondary/40 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
