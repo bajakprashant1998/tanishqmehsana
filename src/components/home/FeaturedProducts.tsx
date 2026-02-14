@@ -1,17 +1,9 @@
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { allProducts } from "@/data/products";
 
-const products = [
-  { id: 1, name: "Celestial Diamond Ring", price: "₹1,25,000", weight: "3.2g", metal: "18K White Gold", category: "Rings" },
-  { id: 2, name: "Maharani Bridal Necklace", price: "₹3,85,000", weight: "42g", metal: "22K Gold", category: "Bridal" },
-  { id: 3, name: "Aurora Pearl Earrings", price: "₹45,000", weight: "5.8g", metal: "18K Gold", category: "Earrings" },
-  { id: 4, name: "Infinity Solitaire Pendant", price: "₹2,10,000", weight: "4.5g", metal: "Platinum", category: "Diamond" },
-  { id: 5, name: "Heritage Gold Bangle", price: "₹1,80,000", weight: "28g", metal: "22K Gold", category: "Gold" },
-  { id: 6, name: "Rose Gold Stackable Ring", price: "₹32,000", weight: "2.1g", metal: "18K Rose Gold", category: "Rings" },
-  { id: 7, name: "Temple Jhumka Earrings", price: "₹68,000", weight: "12g", metal: "22K Gold", category: "Earrings" },
-  { id: 8, name: "Diamond Tennis Bracelet", price: "₹4,50,000", weight: "15g", metal: "18K White Gold", category: "Diamond" },
-];
+const featured = allProducts.slice(0, 8);
 
 const FeaturedProducts = () => {
   return (
@@ -33,7 +25,7 @@ const FeaturedProducts = () => {
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {products.map((product, i) => (
+          {featured.map((product, i) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
@@ -45,11 +37,13 @@ const FeaturedProducts = () => {
                 to={`/product/${product.id}`}
                 className="group block bg-background rounded-xl border border-border overflow-hidden hover:shadow-luxury transition-all duration-300"
               >
-                {/* Image placeholder */}
-                <div className="relative aspect-square bg-gradient-to-br from-muted to-accent overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-5xl opacity-30">💎</span>
-                  </div>
+                <div className="relative aspect-square overflow-hidden bg-muted">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-300" />
                   <button
                     onClick={(e) => { e.preventDefault(); }}
@@ -57,7 +51,7 @@ const FeaturedProducts = () => {
                   >
                     <Heart className="h-4 w-4 text-foreground/60 hover:text-primary" />
                   </button>
-                  <span className="absolute top-3 left-3 text-[10px] tracking-wider uppercase px-2 py-1 rounded-full bg-primary/10 text-primary font-body">
+                  <span className="absolute top-3 left-3 text-[10px] tracking-wider uppercase px-2 py-1 rounded-full bg-primary/10 text-primary font-body backdrop-blur-sm">
                     {product.category}
                   </span>
                 </div>
