@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import VirtualTryOn from "@/components/ai/VirtualTryOn";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -28,12 +29,6 @@ const AIStudio = () => {
   const [genLoading, setGenLoading] = useState(false);
   const [genText, setGenText] = useState("");
 
-  // Try-on state
-  const [selfie, setSelfie] = useState<string | null>(null);
-  const [jewelryDesc, setJewelryDesc] = useState("");
-  const [tryOnResult, setTryOnResult] = useState<string | null>(null);
-  const [tryOnLoading, setTryOnLoading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Stream chat
   const sendChat = useCallback(async () => {
@@ -132,38 +127,6 @@ const AIStudio = () => {
     }
   };
 
-  // Handle selfie upload
-  const handleSelfieUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setSelfie(reader.result as string);
-    reader.readAsDataURL(file);
-  };
-
-  // Virtual try-on
-  const handleTryOn = async () => {
-    if (!selfie || !jewelryDesc.trim() || tryOnLoading) return;
-    setTryOnLoading(true);
-    setTryOnResult(null);
-    try {
-      const resp = await fetch(`${SUPABASE_URL}/functions/v1/ai-try-on`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${SUPABASE_KEY}` },
-        body: JSON.stringify({ selfieBase64: selfie, jewelryDescription: jewelryDesc }),
-      });
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({ error: "Failed" }));
-        throw new Error(err.error || "Try-on failed");
-      }
-      const data = await resp.json();
-      if (data.imageUrl) setTryOnResult(data.imageUrl);
-    } catch (e: any) {
-      toast({ title: "Try-On Error", description: e.message, variant: "destructive" });
-    } finally {
-      setTryOnLoading(false);
-    }
-  };
 
   return (
     <Layout>
@@ -194,71 +157,7 @@ const AIStudio = () => {
 
             {/* Virtual Try-On */}
             <TabsContent value="tryon" className="mt-8">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <h3 className="font-display text-xl font-semibold">Upload Your Photo</h3>
-                  <p className="text-sm text-muted-foreground font-body">Upload a selfie and describe the jewelry you'd like to try on.</p>
-                  
-                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handleSelfieUpload} className="hidden" />
-                  
-                  {selfie ? (
-                    <div className="relative aspect-square rounded-xl overflow-hidden border border-border">
-                      <img src={selfie} alt="Your selfie" className="w-full h-full object-cover" />
-                      <button
-                        onClick={() => { setSelfie(null); setTryOnResult(null); }}
-                        className="absolute top-3 right-3 px-3 py-1 text-xs bg-background/80 backdrop-blur-sm rounded-full font-body"
-                      >
-                        Change
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-full aspect-square rounded-xl border-2 border-dashed border-border hover:border-primary/40 transition-colors flex flex-col items-center justify-center gap-3 bg-muted/30"
-                    >
-                      <Upload className="h-10 w-10 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground font-body">Click to upload selfie</span>
-                    </button>
-                  )}
-
-                  <Input
-                    placeholder="e.g., Gold necklace with emerald pendant and matching earrings"
-                    value={jewelryDesc}
-                    onChange={(e) => setJewelryDesc(e.target.value)}
-                    className="font-body"
-                  />
-
-                  <Button
-                    onClick={handleTryOn}
-                    disabled={!selfie || !jewelryDesc.trim() || tryOnLoading}
-                    className="w-full bg-primary text-primary-foreground hover:bg-gold-dark font-body"
-                  >
-                    {tryOnLoading ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Processing...</> : <><Sparkles className="h-4 w-4 mr-2" /> Try On Jewelry</>}
-                  </Button>
-                </div>
-
-                <div>
-                  <h3 className="font-display text-xl font-semibold mb-4">Result</h3>
-                  {tryOnResult ? (
-                    <div className="space-y-3">
-                      <div className="aspect-square rounded-xl overflow-hidden border border-border">
-                        <img src={tryOnResult} alt="Try-on result" className="w-full h-full object-cover" />
-                      </div>
-                      <a href={tryOnResult} download="tanishq-tryon.png">
-                        <Button variant="outline" size="sm" className="font-body gap-2">
-                          <Download className="h-4 w-4" /> Download
-                        </Button>
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="aspect-square rounded-xl border border-border bg-muted/30 flex items-center justify-center">
-                      <p className="text-sm text-muted-foreground font-body text-center px-8">
-                        Upload a photo and describe the jewelry to see the AI try-on result here.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <VirtualTryOn />
             </TabsContent>
 
             {/* Design Generator */}

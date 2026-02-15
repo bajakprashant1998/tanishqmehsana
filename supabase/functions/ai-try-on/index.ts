@@ -27,7 +27,7 @@ serve(async (req) => {
             content: [
               {
                 type: "text",
-                text: `You are a virtual jewelry try-on assistant. Take this person's photo and realistically add the following jewelry to them: ${jewelryDescription}. Make it look natural and realistic as if they are actually wearing the jewelry. Keep the person's face and features exactly the same.`,
+                text: `You are a professional virtual jewelry try-on system. Analyze the person's photo and detect their facial features (face, ears, neck, hands, wrists) accurately. Then realistically place the following jewelry on them: ${jewelryDescription}. Rules: 1) Detect the correct body part for the jewelry type (earrings→ears, necklace→neck, ring→finger, bracelet→wrist, bangle→wrist). 2) Match the jewelry size, angle, and perspective to the person's pose and proportions. 3) Apply realistic lighting, shadows, and reflections matching the photo's lighting conditions. 4) Keep the person's face, skin tone, and all features exactly the same. 5) Make it look like a real photograph, not a composite.`,
               },
               {
                 type: "image_url",
