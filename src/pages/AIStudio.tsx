@@ -144,14 +144,14 @@ const AIStudio = () => {
 
           <Tabs defaultValue="tryon" className="w-full">
             <TabsList className="w-full grid grid-cols-3 h-12 bg-muted/50 rounded-xl p-1">
-              <TabsTrigger value="tryon" className="font-body text-sm rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2">
-                <Camera className="h-4 w-4" /> Virtual Try-On
+              <TabsTrigger value="tryon" className="font-body text-xs sm:text-sm rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm gap-1.5 sm:gap-2 px-2 sm:px-3">
+                <Camera className="h-4 w-4 shrink-0" /> <span className="hidden sm:inline">Virtual</span> Try-On
               </TabsTrigger>
-              <TabsTrigger value="generate" className="font-body text-sm rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2">
-                <Wand2 className="h-4 w-4" /> Design Generator
+              <TabsTrigger value="generate" className="font-body text-xs sm:text-sm rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm gap-1.5 sm:gap-2 px-2 sm:px-3">
+                <Wand2 className="h-4 w-4 shrink-0" /> <span className="hidden sm:inline">Design</span> Generator
               </TabsTrigger>
-              <TabsTrigger value="chat" className="font-body text-sm rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2">
-                <MessageCircle className="h-4 w-4" /> AI Assistant
+              <TabsTrigger value="chat" className="font-body text-xs sm:text-sm rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm gap-1.5 sm:gap-2 px-2 sm:px-3">
+                <MessageCircle className="h-4 w-4 shrink-0" /> <span className="hidden sm:inline">AI</span> Assistant
               </TabsTrigger>
             </TabsList>
 
