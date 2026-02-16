@@ -11,8 +11,8 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 const Index = () => {
   return (
     <Layout>
-      <HeroCarousel />
       <GoldRateTicker />
+      <HeroCarousel />
       <CategoryShowcase />
       <FeaturedProducts />
       <PromoBanner />
