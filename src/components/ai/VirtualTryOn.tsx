@@ -52,6 +52,22 @@ const VirtualTryOn = () => {
     return `${p.name} — ${p.description}. Material: ${p.metal}, Purity: ${p.purity}. Category: ${p.category}.`;
   };
 
+  const getProductImageBase64 = async (): Promise<string | null> => {
+    if (!selectedProduct) return null;
+    try {
+      const resp = await fetch(selectedProduct.image);
+      const blob = await resp.blob();
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(blob);
+      });
+    } catch {
+      return null;
+    }
+  };
+
   const handleTryOn = async () => {
     if (!selfie) return;
     const desc = buildJewelryDescription();
@@ -62,10 +78,11 @@ const VirtualTryOn = () => {
     setTryOnResult(null);
 
     try {
+      const productImageBase64 = await getProductImageBase64();
       const resp = await fetch(`${SUPABASE_URL}/functions/v1/ai-try-on`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${SUPABASE_KEY}` },
-        body: JSON.stringify({ selfieBase64: selfie, jewelryDescription: desc }),
+        body: JSON.stringify({ selfieBase64: selfie, jewelryDescription: desc, jewelryImageBase64: productImageBase64 }),
       });
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({ error: "Failed" }));
