@@ -44,7 +44,7 @@ const Header = () => {
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="flex flex-col items-center">
               <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-gradient-gold">
-                TANISHQ
+                YAGNIK JEWELLERY
               </span>
               <span className="text-[9px] tracking-[0.3em] text-muted-foreground font-body uppercase">
                 Mehsana
