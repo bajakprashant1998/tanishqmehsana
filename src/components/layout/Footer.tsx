@@ -85,8 +85,8 @@ const Footer = () => {
       <div className="border-t border-secondary-foreground/10">
         <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-display text-lg font-bold text-gradient-gold">TANISHQ</span>
-            <span className="text-xs text-secondary-foreground/50 font-body">Mehsana · A TATA Product</span>
+            <span className="font-display text-lg font-bold text-gradient-gold">YAGNIK JEWELLERY</span>
+            <span className="text-xs text-secondary-foreground/50 font-body">Mehsana</span>
           </div>
           <div className="flex items-center gap-4">
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
@@ -100,7 +100,7 @@ const Footer = () => {
             </a>
           </div>
           <p className="text-xs text-secondary-foreground/50 font-body">
-            © 2026 Tanishq Mehsana. All rights reserved.
+            © 2026 Yagnik Jewellery Mehsana. All rights reserved.
           </p>
         </div>
       </div>
