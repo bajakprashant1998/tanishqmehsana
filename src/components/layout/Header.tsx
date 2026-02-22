@@ -42,19 +42,14 @@ const Header = () => {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <img
-              src="/logo.jpeg"
-              alt="Tanishq Mehsana Logo"
-              className="h-12 md:h-14 w-auto object-contain"
-            />
-            {/* <div className="flex flex-col items-center"> */}
-            {/* <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-gradient-gold">
+            <div className="flex flex-col items-center">
+              <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-gradient-gold">
                 TANISHQ
               </span>
               <span className="text-[9px] tracking-[0.3em] text-muted-foreground font-body uppercase">
                 Mehsana
-              </span> */}
-            {/* </div> */}
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
